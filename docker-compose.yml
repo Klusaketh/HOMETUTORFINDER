@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: ht_db
+    environment:
+      MYSQL_ROOT_PASSWORD: "SakethP@123"
+      MYSQL_DATABASE: hometutor
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+    container_name: ht_backend
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/hometutor?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: "SakethP@123"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      - "1202:1202"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+    container_name: ht_frontend
+    environment:
+      VITE_BACKEND_URL: "http://backend:1202"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+
+volumes:
+  db_data: {}

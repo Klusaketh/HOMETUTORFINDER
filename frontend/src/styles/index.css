@@ -6,10 +6,10 @@
 @tailwind utilities;
 
 :root {
-	--primary: #7C3AED;
-	--primary-light: #A78BFA;
-	--primary-dark: #5B21B6;
-	--background: #F9F9FB;
+	--primary: #0891b2;
+	--primary-light: #06b6d4;
+	--primary-dark: #0e7490;
+	--background: #f0f9fa;
 	color-scheme: light;
 }
 
@@ -39,8 +39,8 @@
 	table.table th, table.table td { @apply p-3 border-b border-neutral-200; }
 
 	/* app shell helpers */
-	.bg-primary-gradient { background: linear-gradient(90deg,var(--primary),var(--primary-light)); }
-	.shadow-soft { box-shadow: 0 12px 30px rgba(99,102,241,0.07); }
+	.bg-primary-gradient { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
+	.shadow-soft { box-shadow: 0 12px 30px rgba(8,145,178,0.08); }
 
 	/* App shell & panel */
 	.app-shell { @apply bg-gradient-to-b from-purple-50 to-purple-100 min-h-screen; }
